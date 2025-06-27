@@ -1,0 +1,24 @@
+name: Build WinForms .NET Framework App
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.3.1
+
+    - name: Restore NuGet packages
+      run: nuget restore "test1-Porg part 3.sln"
+
+    - name: Build solution using MSBuild
+      run: msbuild "test1-Porg part 3.sln" /p:Configuration=Release
